@@ -113,7 +113,7 @@ class Widgets extends Component {
                     }
                     return null;
                 })}
-                {position === 'left' && hasColumn(config.widgets, 'right') ? <div class={classname({
+                {position === 'left' && hasColumn(config.widgets, 'right', config, page) ? <div class={classname({
                     'column-right-shadow': true,
                     'is-hidden-widescreen': true,
                     'is-sticky': isColumnSticky(config, 'right')
