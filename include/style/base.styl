@@ -6,10 +6,10 @@ bulma-stylus-root = '../../../../node_modules/bulma-stylus/stylus'
 $body-size ?= 14px
 $body-background-color ?= #f7f7f7
 
-$family-sans-serif ?= Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif
+$family-sans-serif ?= -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans SC', 'Noto Sans CJK SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'Helvetica Neue', Arial,sans-serif
 $family-code ?= 'Source Code Pro', monospace, 'Microsoft YaHei'
 
-$size-7 ?= .85rem
+$size-7 ?= .95rem
 $size-small ?= .75rem
 
 $primary ?= $blue
@@ -31,7 +31,7 @@ $fullhd ?= 1472px
 
 $shadow ?= 0 4px 10px rgba(0, 0, 0, 0.05)
 
-$title-weight ?= $weight-normal
+$title-weight ?= $weight-medium
 
 $control-height ?= 2.25em
 $button-padding-vertical ?= calc(0.375em - 1px)
@@ -40,11 +40,11 @@ $card-radius ?= $radius
 $card-media-margin ?= 0.75rem
 $card-shadow ?= $shadow, 0 0 1px rgba(0, 0, 0, 0.1)
 
+$menu-label-font-size ?= 0.95rem
 $menu-item-active-color ?= $link
 $menu-item-active-background-color ?= hsl(219, 70%, 96%)
 
-$content-heading-weight ?= $weight-normal
-
+$content-heading-weight ?= $weight-medium
 
 $logo-height ?= 1.75rem
 
@@ -80,6 +80,12 @@ body
 body > .section
     flex-grow: 1
 
+.menu-label
+font-weight: $weight-medium
+
+span.level-item
+    font-weight: $weight-medium
+
 +desktop()
     ::-webkit-scrollbar
         width: 8px
@@ -97,3 +103,13 @@ body > .section
 
     ::-webkit-scrollbar-thumb:hover
         background: rgba(0,0,0,0.24)
+
++widescreen()
+    .column.is-3-widescreen
+        width: 23%
+
+    .column.is-6-widescreen
+        width: 54%
+
+    .column.is-9-widescreen
+        width: 77%

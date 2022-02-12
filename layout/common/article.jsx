@@ -42,8 +42,12 @@ module.exports = class extends Component {
                     </span>}
                 </div> : null}
                 <article class={`card-content article${'direction' in page ? ' ' + page.direction : ''}`} role="article">
+                    {/* Title */}
+                    {page.title !== '' ? <h1 class="title is-3 is-size-4-mobile mb-4">
+                        {index ? <a class="link-muted" href={url_for(page.link || page.path)}>{page.title}</a> : page.title}
+                    </h1> : null}
                     {/* Metadata */}
-                    {page.layout !== 'page' ? <div class="article-meta is-size-7 is-uppercase level is-mobile">
+                    {page.layout !== 'page' ? <div class="article-meta is-size-7 level is-mobile mb-4">
                         <div class="level-left">
                             {/* Creation Date */}
                             {page.date && <span class="level-item" dangerouslySetInnerHTML={{
@@ -59,6 +63,7 @@ module.exports = class extends Component {
                             {page.categories && page.categories.length ? <span class="level-item">
                                 {(() => {
                                     const categories = [];
+                                    categories.push(<span class="level-item">·</span>)
                                     page.categories.forEach((category, i) => {
                                         categories.push(<a class="link-muted" href={url_for(category.path)}>{category.name}</a>);
                                         if (i < page.categories.length - 1) {
@@ -68,6 +73,13 @@ module.exports = class extends Component {
                                     return categories;
                                 })()}
                             </span> : null}
+                            {/* Tags */}
+                            {page.tags && page.tags.length ? <div class="article-tags is-size-7">
+                                <span class="level-item">·</span>
+                                {page.tags.map(tag => {
+                                    return <span class="tag mr-2"><a class="link-muted" rel="tag" href={url_for(tag.path)}>#{tag.name}</a></span>;
+                                })}
+                            </div> : null}
                             {/* Read time */}
                             {article && article.readtime && article.readtime === true ? <span class="level-item">
                                 {(() => {
@@ -82,10 +94,6 @@ module.exports = class extends Component {
                             }}></span> : null}
                         </div>
                     </div> : null}
-                    {/* Title */}
-                    {page.title !== '' ? <h1 class="title is-3 is-size-4-mobile">
-                        {index ? <a class="link-muted" href={url_for(page.link || page.path)}>{page.title}</a> : page.title}
-                    </h1> : null}
                     {/* Content/Excerpt */}
                     <div class="content" dangerouslySetInnerHTML={{ __html: index && page.excerpt ? page.excerpt : page.content }}></div>
                     {/* Licensing block */}
@@ -93,9 +101,8 @@ module.exports = class extends Component {
                         ? <ArticleLicensing.Cacheable page={page} config={config} helper={helper} /> : null}
                     {/* Tags */}
                     {!index && page.tags && page.tags.length ? <div class="article-tags is-size-7 mb-4">
-                        <span class="mr-2">#</span>
                         {page.tags.map(tag => {
-                            return <a class="link-muted mr-2" rel="tag" href={url_for(tag.path)}>{tag.name}</a>;
+                            return <span class="tag mr-2"><a class="link-muted" rel="tag" href={url_for(tag.path)}>#{tag.name}</a></span>;
                         })}
                     </div> : null}
                     {/* "Read more" button */}

@@ -39,7 +39,7 @@ function getColumnCount(widgets, config, page) {
 function getColumnSizeClass(columnCount) {
     switch (columnCount) {
         case 2:
-            return 'is-4-tablet is-4-desktop is-4-widescreen';
+            return 'is-4-tablet is-4-desktop is-3-widescreen';
         case 3:
             return 'is-4-tablet is-4-desktop is-3-widescreen';
     }
@@ -78,28 +78,47 @@ class Widgets extends Component {
             ['column-' + position]: true,
             [getColumnSizeClass(columnCount)]: true,
             [getColumnVisibilityClass(columnCount, position)]: true,
-            [getColumnOrderClass(position)]: true,
-            'is-sticky': isColumnSticky(config, position)
+            [getColumnOrderClass(position)]: true
         })}>
-            {widgets.map(widget => {
-                // widget type is not defined
-                if (!widget.type) {
+            {widgets[0].type === 'profile'?
+                <div style="margin-bottom: 1.5rem">
+                    {(() => {
+                        let profile = widgets.shift()
+                        try {
+                            let Widget = view.require('widget/' + profile.type);
+                            Widget = Widget.Cacheable ? Widget.Cacheable : Widget;
+                            return <Widget site={site} helper={helper} config={config} page={page} widget={profile} />;
+                        } catch (e) {
+                            logger.w(`Icarus cannot load widget "${widget.type}"`);
+                        }
+                        return null;
+                    })()}
+                </div> : null
+            }
+
+            <div class={classname({
+                'is-sticky': isColumnSticky(config, position)
+            })}>
+                {widgets.map(widget => {
+                    // widget type is not defined
+                    if (!widget.type) {
+                        return null;
+                    }
+                    try {
+                        let Widget = view.require('widget/' + widget.type);
+                        Widget = Widget.Cacheable ? Widget.Cacheable : Widget;
+                        return <Widget site={site} helper={helper} config={config} page={page} widget={widget} />;
+                    } catch (e) {
+                        logger.w(`Icarus cannot load widget "${widget.type}"`);
+                    }
                     return null;
-                }
-                try {
-                    let Widget = view.require('widget/' + widget.type);
-                    Widget = Widget.Cacheable ? Widget.Cacheable : Widget;
-                    return <Widget site={site} helper={helper} config={config} page={page} widget={widget} />;
-                } catch (e) {
-                    logger.w(`Icarus cannot load widget "${widget.type}"`);
-                }
-                return null;
-            })}
-            {position === 'left' && hasColumn(config.widgets, 'right', config, page) ? <div class={classname({
-                'column-right-shadow': true,
-                'is-hidden-widescreen': true,
-                'is-sticky': isColumnSticky(config, 'right')
-            })}></div> : null}
+                })}
+                {position === 'left' && hasColumn(config.widgets, 'right') ? <div class={classname({
+                    'column-right-shadow': true,
+                    'is-hidden-widescreen': true,
+                    'is-sticky': isColumnSticky(config, 'right')
+                })}></div> : null}
+            </div>
         </div>;
     }
 }

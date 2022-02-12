@@ -34,10 +34,10 @@ class Profile extends Component {
                 <nav class="level">
                     <div class="level-item has-text-centered flex-shrink-1">
                         <div>
-                            <figure class="image is-128x128 mx-auto mb-2">
+                            <figure class="image is-96x96 mx-auto mb-2">
                                 <img class={'avatar' + (avatarRounded ? ' is-rounded' : '')} src={avatar} alt={author} />
                             </figure>
-                            {author ? <p class="title is-size-4 is-block" style={{'line-height': 'inherit'}}>{author}</p> : null}
+                            {author ? <p class="title is-size-4 is-block mb-2" style={{'line-height': 'inherit'}}>{author}</p> : null}
                             {authorTitle ? <p class="is-size-6 is-block">{authorTitle}</p> : null}
                             {location ? <p class="is-size-6 is-flex justify-content-center">
                                 <i class="fas fa-map-marker-alt mr-1"></i>
@@ -50,25 +50,19 @@ class Profile extends Component {
                     <div class="level-item has-text-centered is-marginless">
                         <div>
                             <p class="heading">{counter.post.title}</p>
-                            <a href={counter.post.url}>
-                                <p class="title">{counter.post.count}</p>
-                            </a>
+                            <p className="title">{counter.post.count}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered is-marginless">
                         <div>
                             <p class="heading">{counter.category.title}</p>
-                            <a href={counter.category.url}>
-                                <p class="title">{counter.category.count}</p>
-                            </a>
+                            <p className="title">{counter.category.count}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered is-marginless">
                         <div>
                             <p class="heading">{counter.tag.title}</p>
-                            <a href={counter.tag.url}>
-                                <p class="title">{counter.tag.count}</p>
-                            </a>
+                            <p className="title">{counter.tag.count}</p>
                         </div>
                     </div>
                 </nav>
@@ -102,7 +96,7 @@ Profile.Cacheable = cacheComponent(Profile, 'widget.profile', props => {
         if (avatar) {
             return url_for(avatar);
         }
-        return url_for('/img/avatar.png');
+        return url_for('/img/avatar.svg');
     }
 
     const postCount = site.posts.length;

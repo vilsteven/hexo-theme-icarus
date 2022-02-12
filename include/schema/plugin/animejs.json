@@ -3,5 +3,5 @@
     "$id": "/plugin/animejs.json",
     "description": "Enable page startup animations",
     "type": "boolean",
-    "default": true
+    "default": false
 }
