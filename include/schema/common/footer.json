@@ -4,6 +4,18 @@
     "description": "Page footer configurations",
     "type": "object",
     "properties": {
+        "icp": {
+            "type": "string",
+            "nullable": true
+        },
+        "police": {
+            "type": "string",
+            "nullable": true
+        },
+        "policeUrl": {
+            "type": "string",
+            "nullable": true
+        },
         "links": {
             "$ref": "/misc/poly_links.json",
             "description": "Links to be shown on the right of the footer section",

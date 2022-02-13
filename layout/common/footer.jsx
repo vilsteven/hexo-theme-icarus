@@ -12,7 +12,10 @@ class Footer extends Component {
             author,
             links,
             showVisitorCounter,
-            visitorCounterTitle
+            visitorCounterTitle,
+            icp,
+            police,
+            policeUrl
         } = this.props;
 
         let footerLogo = '';
@@ -53,6 +56,20 @@ class Footer extends Component {
                                 </p>;
                             })}
                         </div> : null}
+                        {icp ? <div className="field has-addons has-addons-right" style="margin:0">
+                            <a className="button is-transparent" style="padding:0;align-items:flex-end;" target="_blank"
+                               rel="noopener" href="https://beian.miit.gov.cn/">
+                                <p className="is-size-7">{icp}</p>
+                            </a>
+                        </div> : null}
+                        {police ? <div className="field has-addons has-addons-right" style="margin:0">
+                            <a className="button is-transparent" style="padding:0;align-items:flex-start"
+                               target="_blank" rel="noopener"
+                               href={policeUrl}>
+                                <img className="mr-2" src="/img/icon_icp.png"/>
+                                <p className="is-size-7">{police}</p>
+                            </a>
+                        </div>: null}
                     </div>
                 </div>
             </div>
@@ -75,6 +92,9 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
             };
         });
     }
+    const icp = footer.icp;
+    const police = footer.police;
+    const policeUrl = footer.policeUrl;
 
     return {
         logo,
@@ -85,6 +105,9 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
         author,
         links,
         showVisitorCounter: plugins && plugins.busuanzi === true,
-        visitorCounterTitle: _p('plugin.visitor_count', '<span id="busuanzi_value_site_uv">0</span>')
+        visitorCounterTitle: _p('plugin.visitor_count', '<span id="busuanzi_value_site_uv">0</span>'),
+        icp,
+        police,
+        policeUrl
     };
 });
