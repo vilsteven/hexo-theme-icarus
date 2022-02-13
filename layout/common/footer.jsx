@@ -83,18 +83,30 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
     const { logo, title, author, footer, plugins } = config;
 
     const links = {};
-    if (footer && footer.links) {
-        Object.keys(footer.links).forEach(name => {
-            const link = footer.links[name];
-            links[name] = {
-                url: url_for(typeof link === 'string' ? link : link.url),
-                icon: link.icon
-            };
-        });
+    let icp = undefined;
+    let police = undefined;
+    let policeUrl = undefined;
+
+    if (footer) {
+        if (footer.links) {
+            Object.keys(footer.links).forEach(name => {
+                const link = footer.links[name];
+                links[name] = {
+                    url: url_for(typeof link === 'string' ? link : link.url),
+                    icon: link.icon
+                };
+            });
+        }
+        if (footer.icp) {
+            icp = footer.icp;
+        }
+        if (footer.police) {
+            police = footer.police;
+        }
+        if (footer.policeUrl) {
+            policeUrl = footer.policeUrl;
+        }
     }
-    const icp = footer.icp;
-    const police = footer.police;
-    const policeUrl = footer.policeUrl;
 
     return {
         logo,
